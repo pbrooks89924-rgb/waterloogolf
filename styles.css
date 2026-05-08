@@ -1,0 +1,154 @@
+/* GLOBAL */
+body {
+  font-family: 'Segoe UI', Arial;
+  background: #0a2a1f;
+  color: white;
+  margin: 0;
+}
+
+.header {
+  background: linear-gradient(90deg, #133d2b, #1f6f4a);
+  padding: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+.link {
+  float: right;
+  font-size: 14px;
+  color: #c8f7c5;
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.updated {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.7;
+  margin: 8px;
+}
+
+/* TABLE */
+table {
+  width: 95%;
+  margin: auto;
+  border-collapse: collapse;
+  background: white;
+  color: black;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th {
+  background: #1a5f43;
+  color: white;
+  padding: 12px;
+  font-size: 14px;
+}
+
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background: #f4f4f4;
+}
+
+/* PODIUM */
+.first { background: #d4edda !important; font-weight: bold; }
+.second { background: #e2e3e5 !important; }
+.third { background: #f8d7da !important; }
+
+/* MOVEMENT */
+.up { color: green; font-weight: bold; }
+.down { color: red; font-weight: bold; }
+
+/* FADE */
+.fade {
+  opacity: 0;
+  transition: opacity 0.4s ease-in;
+}
+
+.fade.show {
+  opacity: 1;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  th, td {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+/* MOBILE CARD VIEW */
+.mobile-list {
+  display: none;
+  padding: 10px;
+}
+
+.mobile-card {
+  background: white;
+  color: black;
+  margin-bottom: 10px;
+  padding: 14px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mobile-left {
+  text-align: left;
+}
+
+/* Align rank + name horizontally */
+.mobile-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Rank slightly subtle */
+.mobile-rank {
+  font-weight: bold;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Name more prominent */
+.mobile-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mobile-right {
+  text-align: right;
+}
+
+
+
+.mobile-score {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.mobile-behind {
+  font-size: 12px;
+  color: #666;
+}
+
+/* Switch views */
+@media (max-width: 600px) {
+  table {
+    display: none;
+  }
+
+  .mobile-list {
+    display: block;
+  }
+}
