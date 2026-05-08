@@ -105,6 +105,8 @@ tr:nth-child(even) {
 .mobile-left {
   display: flex;
   align-items: center;
+  gap: 8px;
+
   flex: 1;
   min-width: 0;
 }
@@ -126,13 +128,14 @@ tr:nth-child(even) {
 
 /* Name more prominent */
 .mobile-name {
-  font-size: 16px;
-  font-weight: 600;
+  width: 120px;
 
-  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .mobile-right {
@@ -251,13 +254,17 @@ tr:nth-child(even) {
 }
 .mobile-paddles {
   display: flex;
-  gap: 2px;
+  gap: 3px;
 
-  width: 46px;
-  justify-content: flex-start;
-
-  margin-left: 8px;
+  width: 52px;
+  flex-shrink: 0;
 }
 .mobile-card {
   gap: 10px;
+}
+
+.mobile-paddles .paddle {
+  width: 10px;
+  height: 18px;
+  border-radius: 3px;
 }
