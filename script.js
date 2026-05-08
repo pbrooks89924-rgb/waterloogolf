@@ -24,28 +24,28 @@ function normaliseScore(v) {
   return isNaN(n) ? 999 : n;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const { headers, data } = await getData();
+// document.addEventListener("DOMContentLoaded", async () => {
+//   const { headers, data } = await getData();
 
-  const NAME_INDEX = 0;
-  const SCORE_INDEX = 9; // adjust when we see your sheet
+//   const NAME_INDEX = 0;
+//   const SCORE_INDEX = 9; // adjust when we see your sheet
 
-  const processed = data.map(row => {
-    return {
-      name: row[NAME_INDEX],
-      scoreRaw: row[SCORE_INDEX],
-      score: normaliseScore(row[SCORE_INDEX])
-    };
-  });
+//   const processed = data.map(row => {
+//     return {
+//       name: row[NAME_INDEX],
+//       scoreRaw: row[SCORE_INDEX],
+//       score: normaliseScore(row[SCORE_INDEX])
+//     };
+//   });
 
-  processed.sort((a, b) => a.score - b.score);
+//   processed.sort((a, b) => a.score - b.score);
 
-  renderDesktop(processed);
-  renderMobile(processed);
+//   renderDesktop(processed);
+//   renderMobile(processed);
 
-  document.getElementById("updated").textContent =
-    "Updated: " + new Date().toLocaleTimeString();
-});
+//   document.getElementById("updated").textContent =
+//     "Updated: " + new Date().toLocaleTimeString();
+// });
 
 function renderDesktop(players) {
   const table = document.getElementById("leaderboard");
@@ -110,3 +110,33 @@ function renderMobile(players) {
     container.appendChild(card);
   });
 }
+
+async function refreshLeaderboard() {
+  const { data } = await getData();
+
+  const NAME_INDEX = 0;
+  const SCORE_INDEX = 9;
+
+  const processed = data.map(row => {
+    return {
+      name: row[NAME_INDEX],
+      scoreRaw: row[SCORE_INDEX],
+      score: normaliseScore(row[SCORE_INDEX])
+    };
+  });
+
+  processed.sort((a, b) => a.score - b.score);
+
+  renderDesktop(processed);
+  renderMobile(processed);
+
+  document.getElementById("updated").textContent =
+    "Updated: " + new Date().toLocaleTimeString();
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  refreshLeaderboard();
+
+  // auto refresh every 30 seconds
+  setInterval(refreshLeaderboard, 30000);
+});
