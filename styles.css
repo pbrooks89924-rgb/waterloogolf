@@ -89,6 +89,8 @@ tr:nth-child(even) {
 .mobile-list {
   display: none;
   padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .mobile-card {
@@ -132,6 +134,7 @@ tr:nth-child(even) {
   font-weight: bold;
   font-size: 14px;
   color: #666;
+  flex-shrink: 0; /* stop rank from squishing */
 }
 
 .mobile-right {
