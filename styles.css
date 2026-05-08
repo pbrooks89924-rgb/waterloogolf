@@ -96,7 +96,7 @@ tr:nth-child(even) {
 .mobile-card {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 0px;
   background: white;
   color: black;
   margin-bottom: 10px;
@@ -253,6 +253,7 @@ tr:nth-child(even) {
   display: flex;
   gap: 3px;
   flex-shrink: 0;
+  margin-right: 8px;
 }
 
 
