@@ -91,16 +91,11 @@ function renderMobile(players) {
 }
 
 async function refreshLeaderboard() {
-  const { data } = await getData();
+  const { headers, data } = await getData();
 
-  // First row = headers
-  const headers = data[0];
-  const rows = data.slice(1);
-
-  // helper: get column index by name
   const idx = (name) => headers.indexOf(name);
 
-  const processed = rows.map(row => ({
+  const processed = data.map(row => ({
     name: row[idx("Entrant")],
 
     golfers: [
@@ -128,7 +123,6 @@ async function refreshLeaderboard() {
 
   window.currentData = processed;
 
-  // sort by total score
   processed.sort((a, b) => a.total - b.total);
 
   renderDesktop(processed);
@@ -137,7 +131,6 @@ async function refreshLeaderboard() {
   document.getElementById("updated").textContent =
     "Updated: " + new Date().toLocaleTimeString();
 }
-
 document.addEventListener("DOMContentLoaded", () => {
   refreshLeaderboard();
 
