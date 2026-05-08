@@ -94,23 +94,22 @@ tr:nth-child(even) {
 }
 
 .mobile-card {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
+  display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   background: white;
   color: black;
   margin-bottom: 10px;
   padding: 14px;
   border-radius: 8px;
-  overflow: hidden;
-  width: 100%;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .mobile-left {
-  min-width: 0; /* grid child must be told it can shrink */
-  overflow: hidden; /* clip anything that escapes */
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .mobile-name {
@@ -122,11 +121,10 @@ tr:nth-child(even) {
 }
 
 /* Align rank + name horizontally */
-.mobile-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-width: 0; /* also needs this so name can truncate */
+.mobile-right {
+  text-align: right;
+  flex-shrink: 0;
+  min-width: 50px;
 }
 
 /* Rank slightly subtle */
@@ -254,7 +252,7 @@ tr:nth-child(even) {
 .mobile-paddles {
   display: flex;
   gap: 3px;
-  justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 
