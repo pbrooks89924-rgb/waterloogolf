@@ -36,6 +36,7 @@ function renderDesktop(players) {
     <tr>
       <th>#</th>
       <th>Name</th>
+      <th>Status</th>
       <th>Score</th>
     </tr>
   `;
@@ -49,6 +50,9 @@ function renderDesktop(players) {
       <td>${i + 1}</td>
      <td class="entrant-name" data-index="${i}">
   ${p.name}
+</td>
+<td class="paddle-row">
+  ${p.golfers.map(g => getPaddle(g.status)).join("")}
 </td>
      <td>${p.totalRaw}</td>
     `;
@@ -77,12 +81,17 @@ function renderMobile() {
     card.style.cursor = "pointer";
 
     card.innerHTML = `
-      <div class="mobile-left">
-        <div class="mobile-top">
-          <span class="mobile-rank">${i + 1}</span>
-          <span class="mobile-name">${p.name}</span>
-        </div>
-      </div>
+<div class="mobile-left">
+  <div class="mobile-top">
+    <span class="mobile-rank">${i + 1}</span>
+
+    <span class="mobile-name">${p.name}</span>
+
+    <span class="mobile-paddles">
+      ${p.golfers.map(g => getPaddle(g.status)).join("")}
+    </span>
+  </div>
+</div>
 
       <div class="mobile-right">
         <div class="mobile-score">${p.totalRaw}</div>
@@ -111,19 +120,23 @@ async function refreshLeaderboard() {
     golfers: [
       {
         name: row[idx("USA Pick")],
-        score: normaliseScore(row[idx("USA Score")])
+        score: normaliseScore(row[idx("USA Score")]),
+        status: parseInt(row[idx("USA toCut")]) || 0
       },
       {
         name: row[idx("EU Pick")],
-        score: normaliseScore(row[idx("EU Score")])
+        score: normaliseScore(row[idx("EU Score")]),
+        status: parseInt(row[idx("EU toCut")]) || 0
       },
       {
         name: row[idx("ROW Pick")],
-        score: normaliseScore(row[idx("ROW Score")])
+        score: normaliseScore(row[idx("ROW Score")]),
+        status: parseInt(row[idx("ROW toCut")]) || 0  
       },
       {
         name: row[idx("Over50 Pick")],
-        score: normaliseScore(row[idx("Over50 Score")])
+        score: normaliseScore(row[idx("Over50 Score")]),
+        status: parseInt(row[idx("Over50 toCut")]) || 0
       }
     ],
 
@@ -161,7 +174,9 @@ function openModal(player) {
   player.golfers.forEach(g => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-      <td>${g.name}</td>
+      <td>
+      ${getPaddle(g.status)}
+      ${g.name}</td>
       <td>${g.scoreRaw ?? g.score}</td>
     `;
     body.appendChild(tr);
@@ -184,3 +199,14 @@ document.addEventListener("click", (e) => {
   }
 });
 
+function getPaddle(status) {
+  if (status > 0) {
+    return '<span class="paddle green"></span>';
+  }
+
+  if (status < 0) {
+    return '<span class="paddle red"></span>';
+  }
+
+  return '<span class="paddle yellow"></span>';
+}

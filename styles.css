@@ -111,6 +111,7 @@ tr:nth-child(even) {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-wrap: nowrap;
 }
 
 /* Rank slightly subtle */
@@ -215,4 +216,35 @@ tr:nth-child(even) {
 .entrant-name:hover {
   color: #1f6f4a;
   text-decoration: underline;
+}
+
+.paddle-row {
+  white-space: nowrap;
+}
+
+.paddle {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  border-radius: 3px;
+  margin: 0 2px;
+}
+
+.green {
+  background: #28a745;
+}
+
+.yellow {
+  background: #ffc107;
+}
+
+.red {
+  background: #dc3545;
+}
+.mobile-paddles {
+
+  display: flex;
+  gap: 2px;
+  margin-left: 4px;
+  margin-top: 6px;
 }
