@@ -105,10 +105,8 @@ tr:nth-child(even) {
 }
 
 .mobile-left {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  min-width: 0;
+  min-width: 0; /* grid child must be told it can shrink */
+  overflow: hidden; /* clip anything that escapes */
 }
 
 .mobile-name {
@@ -116,6 +114,7 @@ tr:nth-child(even) {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-weight: 600;
+  min-width: 0; /* belt and braces */
 }
 
 /* Align rank + name horizontally */
@@ -123,7 +122,7 @@ tr:nth-child(even) {
   display: flex;
   align-items: center;
   gap: 8px;
-  flex-wrap: nowrap;
+  min-width: 0; /* also needs this so name can truncate */
 }
 
 /* Rank slightly subtle */
