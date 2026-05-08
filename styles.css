@@ -144,7 +144,7 @@ tr:nth-child(even) {
 
 /* Switch views */
 @media (max-width: 600px) {
-  table {
+  #leaderboard {
     display: none;
   }
 
