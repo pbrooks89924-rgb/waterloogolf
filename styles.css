@@ -94,20 +94,22 @@ tr:nth-child(even) {
 .mobile-card {
   background: white;
   color: black;
+
   margin-bottom: 10px;
   padding: 14px;
   border-radius: 8px;
-  display: flex;
-  justify-content: space-between;
+
+  display: grid;
+  grid-template-columns: 1fr auto 70px;
   align-items: center;
+
+  gap: 12px;
 }
 
 .mobile-left {
   display: flex;
   align-items: center;
   gap: 8px;
-
-  flex: 1;
   min-width: 0;
 }
 
@@ -128,9 +130,6 @@ tr:nth-child(even) {
 
 /* Name more prominent */
 .mobile-name {
-  flex: 1;
-  min-width: 0;
-
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -142,7 +141,6 @@ tr:nth-child(even) {
 .mobile-right {
   text-align: right;
 }
-
 
 
 .mobile-score {
@@ -256,9 +254,7 @@ tr:nth-child(even) {
 .mobile-paddles {
   display: flex;
   gap: 3px;
-
-  width: 70px;
-  flex-shrink: 0;
+  justify-content: center;
 }
 .mobile-card {
   gap: 10px;
