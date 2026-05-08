@@ -24,29 +24,6 @@ function normaliseScore(v) {
   return isNaN(n) ? 999 : n;
 }
 
-// document.addEventListener("DOMContentLoaded", async () => {
-//   const { headers, data } = await getData();
-
-//   const NAME_INDEX = 0;
-//   const SCORE_INDEX = 9; // adjust when we see your sheet
-
-//   const processed = data.map(row => {
-//     return {
-//       name: row[NAME_INDEX],
-//       scoreRaw: row[SCORE_INDEX],
-//       score: normaliseScore(row[SCORE_INDEX])
-//     };
-//   });
-
-//   processed.sort((a, b) => a.score - b.score);
-
-//   renderDesktop(processed);
-//   renderMobile(processed);
-
-//   document.getElementById("updated").textContent =
-//     "Updated: " + new Date().toLocaleTimeString();
-// });
-
 function renderDesktop(players) {
   const table = document.getElementById("leaderboard");
 
@@ -116,26 +93,43 @@ function renderMobile(players) {
 async function refreshLeaderboard() {
   const { data } = await getData();
 
-  const NAME_INDEX = 0;
-  const SCORE_INDEX = 9;
+  // First row = headers
+  const headers = data[0];
+  const rows = data.slice(1);
 
-const processed = data.map(row => ({
-  name: row[0],
+  // helper: get column index by name
+  const idx = (name) => headers.indexOf(name);
 
-  golfers: [
-    { name: row[1], score: normaliseScore(row[2]) },
-    { name: row[3], score: normaliseScore(row[4]) },
-    { name: row[5], score: normaliseScore(row[6]) },
-    { name: row[7], score: normaliseScore(row[8]) }
-  ],
+  const processed = rows.map(row => ({
+    name: row[idx("Entrant")],
 
-  totalRaw: row[9],
-  total: normaliseScore(row[9])
-}));
+    golfers: [
+      {
+        name: row[idx("USA Pick")],
+        score: normaliseScore(row[idx("USA Score")])
+      },
+      {
+        name: row[idx("EU Pick")],
+        score: normaliseScore(row[idx("EU Score")])
+      },
+      {
+        name: row[idx("ROW Pick")],
+        score: normaliseScore(row[idx("ROW Score")])
+      },
+      {
+        name: row[idx("Over50 Pick")],
+        score: normaliseScore(row[idx("Over50 Score")])
+      }
+    ],
+
+    totalRaw: row[idx("Total Score")],
+    total: normaliseScore(row[idx("Total Score")])
+  }));
 
   window.currentData = processed;
 
-  processed.sort((a, b) => a.score - b.score);
+  // sort by total score
+  processed.sort((a, b) => a.total - b.total);
 
   renderDesktop(processed);
   renderMobile(processed);
