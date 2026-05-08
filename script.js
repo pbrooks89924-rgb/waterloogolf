@@ -82,18 +82,16 @@ function renderMobile() {
 
     card.innerHTML = `
 <div class="mobile-left">
-  <div class="mobile-top">
-    <span class="mobile-rank">${i + 1}</span>
+  <span class="mobile-rank">${i + 1}</span>
 
-    <span class="mobile-name">${p.name}</span>
+  <span class="mobile-name">${p.name}</span>
 
-    <span class="mobile-paddles">
-      ${p.golfers.map(g => getPaddle(g.status)).join("")}
-    </span>
-  </div>
+  <span class="mobile-paddles">
+    ${p.golfers.map(g => getPaddle(g.status)).join("")}
+  </span>
 </div>
 
-      <div class="mobile-right">
+<div class="mobile-right">
         <div class="mobile-score">${p.totalRaw}</div>
         <div class="mobile-behind">
           ${diff === 0 ? "E" : diff > 0 ? "+" + diff : diff}
