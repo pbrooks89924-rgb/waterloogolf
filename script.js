@@ -68,7 +68,9 @@ function renderDesktop(players) {
 
     tr.innerHTML = `
       <td>${i + 1}</td>
-      <td>${p.name}</td>
+     <td class="entrant-name" data-index="${i}">
+  ${p.name}
+</td>
       <td>${p.scoreRaw}</td>
     `;
 
@@ -117,13 +119,21 @@ async function refreshLeaderboard() {
   const NAME_INDEX = 0;
   const SCORE_INDEX = 9;
 
-  const processed = data.map(row => {
-    return {
-      name: row[NAME_INDEX],
-      scoreRaw: row[SCORE_INDEX],
-      score: normaliseScore(row[SCORE_INDEX])
-    };
-  });
+const processed = data.map(row => ({
+  name: row[0],
+
+  golfers: [
+    { name: row[1], score: normaliseScore(row[2]) },
+    { name: row[3], score: normaliseScore(row[4]) },
+    { name: row[5], score: normaliseScore(row[6]) },
+    { name: row[7], score: normaliseScore(row[8]) }
+  ],
+
+  totalRaw: row[9],
+  total: normaliseScore(row[9])
+}));
+
+  window.currentData = processed;
 
   processed.sort((a, b) => a.score - b.score);
 
@@ -139,4 +149,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // auto refresh every 30 seconds
   setInterval(refreshLeaderboard, 30000);
+});
+
+function openModal(index) {
+  const player = window.currentData[index];
+
+  document.getElementById("modalName").textContent = player.name;
+
+  const body = document.getElementById("modalBody");
+  body.innerHTML = "";
+
+  player.golfers.forEach(g => {
+    const tr = document.createElement("tr");
+
+    tr.innerHTML = `
+      <td>${g.name}</td>
+      <td>${g.scoreRaw ?? g.score}</td>
+    `;
+
+    body.appendChild(tr);
+  });
+
+  document.getElementById("modalTotal").textContent =
+    "Total: " + player.totalRaw;
+
+  document.getElementById("playerModal").classList.remove("hidden");
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("entrant-name")) {
+    openModal(e.target.dataset.index);
+  }
+
+  if (e.target.classList.contains("close")) {
+    document.getElementById("playerModal").classList.add("hidden");
+  }
 });
