@@ -81,24 +81,24 @@ function renderMobile() {
     card.style.cursor = "pointer";
 
     card.innerHTML = `
-      <div class="mobile-left">
-<div class="mobile-top">
-  <span class="mobile-rank">${i + 1}</span>
-  <span class="mobile-name">${p.name}</span>
-</div>
+  <div class="mobile-left">
+    <div class="mobile-top">
+      <span class="mobile-rank">${i + 1}</span>
+      <span class="mobile-name">${p.name}</span>
+    </div>
+  </div>
 
-<div class="mobile-paddles">
-  ${p.golfers.map(g => getPaddle(g.status)).join("")}
-</div>
-      </div>
+  <div class="mobile-paddles">
+    ${p.golfers.map(g => getPaddle(g.status)).join("")}
+  </div>
 
-      <div class="mobile-right">
-        <div class="mobile-score">${p.totalRaw}</div>
-        <div class="mobile-behind">
-          ${diff === 0 ? "E" : diff > 0 ? "+" + diff : diff}
-        </div>
-      </div>
-    `;
+  <div class="mobile-right">
+    <div class="mobile-score">${p.totalRaw}</div>
+    <div class="mobile-behind">
+      ${diff === 0 ? "E" : diff > 0 ? "+" + diff : diff}
+    </div>
+  </div>
+`;
 
  card.addEventListener("click", () => {
   openModal(p);

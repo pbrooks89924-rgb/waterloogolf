@@ -252,7 +252,10 @@ tr:nth-child(even) {
   justify-content: center;
 }
 .mobile-card {
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr auto 60px;
+  align-items: center;
+  gap: 6px;
 }
 
 .mobile-paddles .paddle {
