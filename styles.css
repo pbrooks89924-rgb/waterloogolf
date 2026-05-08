@@ -256,7 +256,7 @@ tr:nth-child(even) {
   display: flex;
   gap: 3px;
 
-  width: 52px;
+  width: 70px;
   flex-shrink: 0;
 }
 .mobile-card {
@@ -264,7 +264,7 @@ tr:nth-child(even) {
 }
 
 .mobile-paddles .paddle {
-  width: 10px;
+  width: 14px;
   height: 18px;
   border-radius: 3px;
 }
