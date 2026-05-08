@@ -207,3 +207,12 @@ tr:nth-child(even) {
   font-weight: bold;
   text-align: right;
 }
+.entrant-name {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.entrant-name:hover {
+  color: #1f6f4a;
+  text-decoration: underline;
+}

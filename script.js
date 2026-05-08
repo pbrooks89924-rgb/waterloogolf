@@ -9,7 +9,9 @@ async function getData() {
 
   const rows = text.trim().split("\n").map(r => r.split(","));
 
-  const headers = rows[0];
+    let headers = rows[0].map(h =>
+    h.replace(/[\r\n]/g, "").trim()
+  );
   const data = rows.slice(1);
 
   return { headers, data };
@@ -48,7 +50,7 @@ function renderDesktop(players) {
      <td class="entrant-name" data-index="${i}">
   ${p.name}
 </td>
-      <td>${p.scoreRaw}</td>
+     <td>${p.totalRaw}</td>
     `;
 
     tbody.appendChild(tr);
@@ -58,17 +60,21 @@ function renderDesktop(players) {
   table.appendChild(tbody);
 }
 
-function renderMobile(players) {
+function renderMobile() {
+  console.log("MOBILE DATA:", window.currentData);
   const container = document.getElementById("mobileLeaderboard");
   container.innerHTML = "";
 
-  const leaderScore = players[0]?.score ?? 0;
+  const players = window.currentData;
+
+  const leaderScore = players[0]?.total ?? 0;
 
   players.forEach((p, i) => {
-    const diff = p.score - leaderScore;
+    const diff = p.total - leaderScore;
 
     const card = document.createElement("div");
-    card.className = "mobile-card";
+    card.classList.add("mobile-card");
+    card.style.cursor = "pointer";
 
     card.innerHTML = `
       <div class="mobile-left">
@@ -79,12 +85,16 @@ function renderMobile(players) {
       </div>
 
       <div class="mobile-right">
-        <div class="mobile-score">${p.scoreRaw}</div>
+        <div class="mobile-score">${p.totalRaw}</div>
         <div class="mobile-behind">
           ${diff === 0 ? "E" : diff > 0 ? "+" + diff : diff}
         </div>
       </div>
     `;
+
+ card.addEventListener("click", () => {
+  openModal(p);
+});
 
     container.appendChild(card);
   });
@@ -127,6 +137,10 @@ async function refreshLeaderboard() {
 
   renderDesktop(processed);
   renderMobile(processed);
+console.log(headers.map(h => ({
+  raw: h,
+  json: JSON.stringify(h)
+})));
 
   document.getElementById("updated").textContent =
     "Updated: " + new Date().toLocaleTimeString();
@@ -138,9 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(refreshLeaderboard, 30000);
 });
 
-function openModal(index) {
-  const player = window.currentData[index];
-
+function openModal(player) {
   document.getElementById("modalName").textContent = player.name;
 
   const body = document.getElementById("modalBody");
@@ -148,12 +160,10 @@ function openModal(index) {
 
   player.golfers.forEach(g => {
     const tr = document.createElement("tr");
-
     tr.innerHTML = `
       <td>${g.name}</td>
       <td>${g.scoreRaw ?? g.score}</td>
     `;
-
     body.appendChild(tr);
   });
 
@@ -165,10 +175,12 @@ function openModal(index) {
 
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("entrant-name")) {
-    openModal(e.target.dataset.index);
+    const i = parseInt(e.target.dataset.index);
+    openModal(window.currentData[i]); // look up by index here instead
   }
 
   if (e.target.classList.contains("close")) {
     document.getElementById("playerModal").classList.add("hidden");
   }
 });
+
