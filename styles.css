@@ -128,7 +128,7 @@ tr:nth-child(even) {
 
 /* Name more prominent */
 .mobile-name {
-  width: 200px;
+  width: 250px;
 
   overflow: hidden;
   text-overflow: ellipsis;
