@@ -93,9 +93,9 @@ tr:nth-child(even) {
 
 .mobile-card {
   display: grid;
-  grid-template-columns: 1fr 80px 60px;
+  grid-template-columns: 1fr auto 60px;
   align-items: center;
-  gap: 12px;
+  gap: 6px;
 
   background: white;
   color: black;
